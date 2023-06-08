@@ -18,18 +18,24 @@ $url = $argv[1];
 
 ////
 
+if(!isset($_POST['url']) && !isset($_POST['mode'])) {
+    echo "No POST arguments";
+    exit;
+}
 
-//$url = $_POST['url']; //POST
-//$mode = $_POST['mode']; //POST
+$url = $_POST['url']; //POST
+$mode = $_POST['mode']; //POST
 
-$url = $argv[1];
-$mode = $argv[2];
+
+
+//$url = $argv[1];
+//$mode = $argv[2];
 
 if($mode == 0) {
     $parsedUrl = parse_url($url);
     $dir =  'archive/' . $parsedUrl['host'] . $parsedUrl['path'];
 
-    echo $url;
+    echo $url . "\n";
     //exit;
 
     archive($url);
@@ -50,7 +56,7 @@ else if($mode == 1){
         $parsedUrl = parse_url($res);
         $dir =  'archive/' . $parsedUrl['host'] . $parsedUrl['path'];
         
-        exit;
+        //exit;
 
         archive($res); //IMPORTANT!!!
 
@@ -154,6 +160,7 @@ function getHrefUrls($url) {
     }
 
     $hrefUrls = [];
+    $hrefUrls[] = $url;
 
     $parsedUrl = parse_url($url);
 
