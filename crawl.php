@@ -1,4 +1,5 @@
 <?php
+/*
 
 if (count($argv) !== 2) {
     echo "Usage: php crawl.php [URL]";
@@ -6,6 +7,8 @@ if (count($argv) !== 2) {
 }
 
 $url = $argv[1];
+
+*/
 //$parsedUrl = parse_url($url);
 //$dir =  'archive/' . $parsedUrl['host'] . $parsedUrl['path'];
 
@@ -16,7 +19,85 @@ $url = $argv[1];
 ////
 
 
+//$url = $_POST['url']; //POST
+//$mode = $_POST['mode']; //POST
 
+$url = $argv[1];
+$mode = $argv[2];
+
+if($mode == 0) {
+    $parsedUrl = parse_url($url);
+    $dir =  'archive/' . $parsedUrl['host'] . $parsedUrl['path'];
+
+    echo $url;
+    //exit;
+
+    archive($url);
+}
+else if($mode == 1){
+    $hrefUrls = getHrefUrls($url);
+    $result = $hrefUrls;
+
+    $result = array_unique($result);
+
+    $count = count($result);
+    $step = 1;
+
+
+    foreach ($result as $res) {
+        echo $res . ' ' . $step. '/' . $count . "\n";
+
+        $parsedUrl = parse_url($res);
+        $dir =  'archive/' . $parsedUrl['host'] . $parsedUrl['path'];
+        
+        //exit;
+
+        archive($res); //IMPORTANT!!!
+
+        $step = $step + 1;
+
+    }
+}
+else if($mode == 2) {
+    $hrefUrls = getHrefUrls($url);
+    $result = [];
+
+    foreach ($hrefUrls as $hrefUrl) {
+        $secondIter = getHrefUrls($hrefUrl);
+        if ($secondIter == null) {
+            continue;
+        }
+        $result = array_merge($result,$secondIter);
+    }
+
+    $result = array_unique($result);
+
+    $count = count($result);
+    $step = 1;
+
+    //print_r($result);
+
+    foreach ($result as $res) {
+        echo $res . ' ' . $step. '/' . $count . "\n";
+
+        $parsedUrl = parse_url($res);
+        $dir =  'archive/' . $parsedUrl['host'] . $parsedUrl['path'];
+
+        //exit;
+
+        archive($res); //IMPORTANT!!!
+
+        $step = $step + 1;
+        
+    }
+
+}
+else {
+    echo "Wrong mode!";
+    exit;
+}
+
+/*
 $hrefUrls = getHrefUrls($url);
 
 /*$result = [];
@@ -36,6 +117,7 @@ foreach ($hrefUrls as $hrefUrl) {
 
 */ //IMPORTANT!!! IN DEPTH SEARCH
 
+/*
 
 
 $result = $hrefUrls;
@@ -43,6 +125,7 @@ $count = count($result);
 $step = 1;
 
 $result = array_unique($result);
+
 foreach ($result as $res) {
     echo $res . ' ' . $step. '/' . $count . "\n";
 
@@ -60,7 +143,7 @@ foreach ($result as $res) {
     //$secondIter[] = getHrefUrls($hrefUrl);
 }
 
-
+*/
 
 function getHrefUrls($url) {
     $htmlContent = file_get_contents($url);
