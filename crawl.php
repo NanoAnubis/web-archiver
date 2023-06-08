@@ -50,7 +50,7 @@ else if($mode == 1){
         $parsedUrl = parse_url($res);
         $dir =  'archive/' . $parsedUrl['host'] . $parsedUrl['path'];
         
-        //exit;
+        exit;
 
         archive($res); //IMPORTANT!!!
 
@@ -171,7 +171,8 @@ function getHrefUrls($url) {
         $u = $matches[1];
         $parsedUrl2 = parse_url($u);
 
-        if($parsedUrl['host'] == $parsedUrl2['host']){
+
+        if(isset($parsedUrl['host']) && isset($parsedUrl2['host']) && ($parsedUrl['host'] == $parsedUrl2['host'])){
             $save = 'https://' . $parsedUrl2['host'] . $parsedUrl2['path'];
             $hrefUrls[] = $save;
         }
