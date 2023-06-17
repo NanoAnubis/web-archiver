@@ -379,7 +379,7 @@ function archive($url) {
         return "@import url(\"" . $fileName . "\");";
     }, $htmlContent);
 
-    $htmlContent = str_replace('<a href="' . $url, '<a href=' . "/archive/$date/" . $parsedUrl['host'], $htmlContent);
+    $htmlContent = str_replace('<a href="' . $url, '<a href="' . "/archive/$date/" . $parsedUrl['host'], $htmlContent);
 
     $htmlContent = preg_replace_callback('/<a([^>]*href=[\'"])([^\'"]+)([^\'"]*[\'"][^>]*>)/', function($matches) {
         $url = $matches[2];
