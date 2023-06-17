@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Form Submission</title>
+    <title>Web Archiver</title>
+    <script type="text/javascript" src="scripts/form.js"></script>
+
 </head>
 <body>
-    <h1>Form Submission</h1>
+    <h1>Archive new website</h1>
     <form id="myForm" action="crawl.php" method="post">
         <label for="url">URL:</label>
         <input type="text" id="url" name="url" required><br><br>
@@ -17,29 +19,5 @@
         <input type="submit" value="Submit">
     </form>
 
-    <script>
-        document.getElementById("myForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // Prevent the form from submitting normally
-
-            // Get the form data
-            var formData = new FormData(this);
-
-            console.log("Archiving started");
-
-            // Create an AJAX request
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", this.action, true);
-            xhr.send(formData);
-
-            // Optional: Handle response if needed
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    // Handle the response here
-                    alert("Website archiving completed!");
-                    console.log(xhr.responseText);
-                }
-            };
-        });
-    </script>
 </body>
 </html>
