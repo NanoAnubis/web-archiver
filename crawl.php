@@ -10,7 +10,7 @@ $url = $argv[1];
 
 */
 //$parsedUrl = parse_url($url);
-//$dir =  'archive/' . $parsedUrl['host'] . $parsedUrl['path'];
+//$dir =  "archive/$date/" . $parsedUrl['host'] . $parsedUrl['path'];
 
 //$rootContent = file_get_contents($argv[1]);
 
@@ -20,6 +20,10 @@ $url = $argv[1];
 
 if(!isset($_POST['url']) && !isset($_POST['mode'])) {
     echo "No POST arguments";
+
+    $date = date("Ymd");
+    echo $date;
+
     exit;
 }
 
@@ -27,13 +31,15 @@ $url = $_POST['url']; //POST
 $mode = $_POST['mode']; //POST
 
 
+$date = date("Ymd");
+
 
 //$url = $argv[1];
 //$mode = $argv[2];
 
 if($mode == 0) {
     $parsedUrl = parse_url($url);
-    $dir =  'archive/' . $parsedUrl['host'] . $parsedUrl['path'];
+    $dir =  "archive/$date/" . $parsedUrl['host'] . $parsedUrl['path'];
 
     echo $url . "\n";
     //exit;
@@ -54,7 +60,7 @@ else if($mode == 1){
         echo $res . ' ' . $step. '/' . $count . "\n";
 
         $parsedUrl = parse_url($res);
-        $dir =  'archive/' . $parsedUrl['host'] . $parsedUrl['path'];
+        $dir =  "archive/$date/" . $parsedUrl['host'] . $parsedUrl['path'];
         
         //exit;
 
@@ -87,7 +93,7 @@ else if($mode == 2) {
         echo $res . ' ' . $step. '/' . $count . "\n";
 
         $parsedUrl = parse_url($res);
-        $dir =  'archive/' . $parsedUrl['host'] . $parsedUrl['path'];
+        $dir =  "archive/$date/" . $parsedUrl['host'] . $parsedUrl['path'];
 
         //exit;
 
@@ -136,7 +142,7 @@ foreach ($result as $res) {
     echo $res . ' ' . $step. '/' . $count . "\n";
 
     $parsedUrl = parse_url($res);
-    $dir =  'archive/' . $parsedUrl['host'] . $parsedUrl['path'];
+    $dir =  "archive/$date/" . $parsedUrl['host'] . $parsedUrl['path'];
 
     //$rootContent = file_get_contents($argv[1]);
 
@@ -212,10 +218,12 @@ function archive($url) {
     //$url2= $url;
     $url= 'https://' . $parsedUrl['host'];
 
-    //$dir =  'archive/' . $parsedUrl['host'] . $parsedUrl['path'];
+    //$dir =  "archive/$date/" . $parsedUrl['host'] . $parsedUrl['path'];
 
     if (!is_dir('archive')) {
-        mkdir('archive');
+        echo "Directory archive not created!";
+        exit;
+        //mkdir('archive');
     }
 
     if (is_dir($dir)) {
@@ -236,7 +244,7 @@ function archive($url) {
     $htmlContent = str_replace('href="/', 'href="' . $url . '/', $htmlContent);
     $htmlContent = str_replace("href='/", "href='" . $url . '/', $htmlContent);
 
-    //$filename = 'archive/index.html'; //testing
+    //$filename = "archive/$date/"ndex.html'; //testing
     //file_put_contents($filename, $htmlContent); //testing
     //exit; //testing
 
@@ -360,7 +368,7 @@ function archive($url) {
         return "@import url(\"" . $fileName . "\");";
     }, $htmlContent);
 
-    $htmlContent = str_replace('<a href="' . $url, '<a href="/archive/' . $parsedUrl['host'], $htmlContent);
+    $htmlContent = str_replace('<a href="' . $url, '<a href=""archive/$date/" . $parsedUrl['host'], $htmlContent);
 
     $htmlContent = preg_replace_callback('/<a([^>]*href=[\'"])([^\'"]+)([^\'"]*[\'"][^>]*>)/', function($matches) {
         $url = $matches[2];
