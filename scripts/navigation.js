@@ -5,7 +5,7 @@ function redirect() {
 
   // Redirect to the selected website
   if (selectedValue) {
-    window.location.href = selectedValue;
+    window.location.href = '/' + selectedValue;
   }
 }
 
