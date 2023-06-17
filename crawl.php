@@ -443,10 +443,13 @@ function archive($url) {
     
     $navigationDiv = '<div id="navigation">
     <select id="websiteDropdown"></select>
-    </div>
-    <script type="text/javascript" src="/scripts/navigation.js"></script>';
+    </div>';
+
+    $scriptDiv ='<script type="text/javascript" src="/scripts/navigation.js"></script>';
 
     $htmlContent = str_replace('</body>', $navigationDiv . '</body>', $htmlContent);
+
+    $htmlContent = str_replace('<head>', 'head' . $scriptDiv, $htmlContent);
 
     // Save the HTML content as index.html in the archive directory
     $filename = $dir . '/index.html';
