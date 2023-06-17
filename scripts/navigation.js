@@ -1,4 +1,13 @@
+function redirect() {
+  // Get the selected option's value
+  var dropdown = document.getElementById("websiteDropdown");
+  var selectedValue = dropdown.value;
 
+  // Redirect to the selected website
+  if (selectedValue) {
+    window.location.href = selectedValue;
+  }
+}
 
 fetch('/getwebsites.php')
   .then(response => response.json())
