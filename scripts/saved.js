@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
           row.innerHTML = `
             <td><a href="${website.url}">${website.url}</a></td>
             <td>${website.date}</td>
-            <td><a href="${website.dir}">${website.dir}</a></td>
+            <td><a href="${website.dir}">Click here!</a></td>
           `;
           websiteTable.querySelector("tbody").appendChild(row);
         });
