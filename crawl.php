@@ -46,7 +46,7 @@ if($mode == 0) {
     //exit;
 
     archive($url);
-    echo $dir . "\n";
+    echo "http://localhost/$dir" . "\n";
 }
 else if($mode == 1){
     $hrefUrls = getHrefUrls($url);
@@ -69,7 +69,7 @@ else if($mode == 1){
 
         archive($res); //IMPORTANT!!!
         if($step == 1) {
-            echo $dir . "\n";
+            echo "http://localhost/$dir" . "\n";
         }
 
         $step = $step + 1;
