@@ -12,7 +12,7 @@ $url = $argv[1];
 
 */
 //$parsedUrl = parse_url($url);
-//$dir =  "archive/$date/" . $parsedUrl['host'] . $parsedUrl['path'];
+//$dir =  "archive/$date/$mode/" . $parsedUrl['host'] . $parsedUrl['path'];
 
 //$rootContent = file_get_contents($argv[1]);
 
@@ -41,15 +41,15 @@ $date = date("Ymd");
 
 if($mode == 0) {
     $parsedUrl = parse_url($url);
-    $dir =  "archive/$date/" . $parsedUrl['host'] . $parsedUrl['path'];
+    $dir =  "archive/$date/$mode/" . $parsedUrl['host'] . $parsedUrl['path'];
 
     //exit;
 
     archive($url);
 
-    addWebsiteRecord($url, $dir, $date);
+    addWebsiteRecord($url, $dir, $date, $mode);
 
-    echo "http://localhost/$dir" . "\n";
+    echo "http://localhost/$dir/$mode/" . "\n";
 }
 else if($mode == 1){
     $hrefUrls = getHrefUrls($url);
@@ -66,15 +66,15 @@ else if($mode == 1){
         error_log($log);
 
         $parsedUrl = parse_url($res);
-        $dir =  "archive/$date/" . $parsedUrl['host'] . $parsedUrl['path'];
+        $dir =  "archive/$date/$mode/" . $parsedUrl['host'] . $parsedUrl['path'];
         
         //exit;
 
         archive($res); //IMPORTANT!!!
         if($step == 1) {
-            addWebsiteRecord($url, $dir, $date);
+            addWebsiteRecord($url, $dir, $date, $mode);
 
-            echo "http://localhost/$dir" . "\n";
+            echo "http://localhost/$dir/$mode/" . "\n";
         }
 
         $step = $step + 1;
@@ -105,15 +105,15 @@ else if($mode == 2) {
         error_log($log);
 
         $parsedUrl = parse_url($res);
-        $dir =  "archive/$date/" . $parsedUrl['host'] . $parsedUrl['path'];
+        $dir =  "archive/$date/$mode/" . $parsedUrl['host'] . $parsedUrl['path'];
 
         //exit;
 
         archive($res); //IMPORTANT!!!
         if($step == 1) {
-            addWebsiteRecord($url, $dir, $date);
+            addWebsiteRecord($url, $dir, $date, $mode);
             
-            echo "http://localhost/$dir" . "\n";
+            echo "http://localhost/$dir/$mode/" . "\n";
         }
 
         $step = $step + 1;
@@ -162,7 +162,7 @@ foreach ($result as $res) {
     echo $res . ' ' . $step. '/' . $count . "\n";
 
     $parsedUrl = parse_url($res);
-    $dir =  "archive/$date/" . $parsedUrl['host'] . $parsedUrl['path'];
+    $dir =  "archive/$date/$mode/" . $parsedUrl['host'] . $parsedUrl['path'];
 
     //$rootContent = file_get_contents($argv[1]);
 
@@ -239,7 +239,7 @@ function archive($url) {
     //$url2= $url;
     $url= 'https://' . $parsedUrl['host'];
 
-    //$dir =  "archive/$date/" . $parsedUrl['host'] . $parsedUrl['path'];
+    //$dir =  "archive/$date/$mode/" . $parsedUrl['host'] . $parsedUrl['path'];
 
     if (!is_dir('archive')) {
         echo "Directory archive not created!";
@@ -265,7 +265,7 @@ function archive($url) {
     $htmlContent = str_replace('href="/', 'href="' . $url . '/', $htmlContent);
     $htmlContent = str_replace("href='/", "href='" . $url . '/', $htmlContent);
 
-    //$filename = "archive/$date/"ndex.html'; //testing
+    //$filename = "archive/$date/$mode/"ndex.html'; //testing
     //file_put_contents($filename, $htmlContent); //testing
     //exit; //testing
 
@@ -389,7 +389,7 @@ function archive($url) {
         return "@import url(\"" . $fileName . "\");";
     }, $htmlContent);
 
-    $htmlContent = str_replace('<a href="' . $url, '<a href="' . "/archive/$date/" . $parsedUrl['host'], $htmlContent);
+    $htmlContent = str_replace('<a href="' . $url, '<a href="' . "/archive/$date/$mode/" . $parsedUrl['host'], $htmlContent);
 
     $htmlContent = preg_replace_callback('/<a([^>]*href=[\'"])([^\'"]+)([^\'"]*[\'"][^>]*>)/', function($matches) {
         $url = $matches[2];
@@ -509,7 +509,7 @@ function extractUrlsFromCSS($cssContent, $cssFile, $htmlUrl) {
 }
 
 
-function addWebsiteRecord($url, $dir, $date) {
+function addWebsiteRecord($url, $dir, $date, $mode) {
     // Database connection settings
     $host = 'localhost';
     $dbname = 'webarchiver';
@@ -527,8 +527,8 @@ function addWebsiteRecord($url, $dir, $date) {
 
     // Prepare and execute the SQL query
     try {
-        $stmt = $conn->prepare('INSERT INTO websites (url, dir, date) VALUES (?, ?, ?)');
-        $stmt->execute([$url, $dir, $date]);
+        $stmt = $conn->prepare('INSERT INTO websites (url, dir, date, mode) VALUES (?, ?, ?, ?)');
+        $stmt->execute([$url, $dir, $date, $mode]);
         //echo 'Record added successfully!';
     } catch(PDOException $e) {
         echo 'Error adding record: ' . $e->getMessage();
