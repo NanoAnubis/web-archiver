@@ -529,7 +529,7 @@ function addWebsiteRecord($url, $dir, $date) {
     try {
         $stmt = $conn->prepare('INSERT INTO websites (url, dir, date) VALUES (?, ?, ?)');
         $stmt->execute([$url, $dir, $date]);
-        echo 'Record added successfully!';
+        //echo 'Record added successfully!';
     } catch(PDOException $e) {
         echo 'Error adding record: ' . $e->getMessage();
     }
