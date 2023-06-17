@@ -10,7 +10,7 @@ try {
   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
   // Fetch websites from the database
-  $stmt = $pdo->query("SELECT * FROM websites");
+  $stmt = $pdo->query("SELECT * FROM websites ORDER BY url, date ASC");
   $websites = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
   // Send websites as JSON response
