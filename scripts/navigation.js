@@ -1,4 +1,4 @@
-fetch('getwebsites.php')
+fetch('/getwebsites.php')
   .then(response => response.json())
   .then(data => {
     // Get the dropdown element

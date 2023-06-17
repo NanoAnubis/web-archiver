@@ -238,7 +238,7 @@ function archive($url) {
     $navigationDiv = '<div id="navigation">
     <select id="websiteDropdown"></select>
     </div>
-    <script type="text/javascript" src="scripts/navigation.js"></script>';
+    <script type="text/javascript" src="/scripts/navigation.js"></script>';
 
     $htmlContent = str_replace('</body>', $navigationDiv . '</body>', $htmlContent);
 
