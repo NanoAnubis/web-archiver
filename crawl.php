@@ -59,7 +59,8 @@ else if($mode == 1){
 
 
     foreach ($result as $res) {
-        echo $res . ' ' . $step. '/' . $count . "\n";
+        $log = $res . ' ' . $step. '/' . $count . "\n";
+        error_log($log);
 
         $parsedUrl = parse_url($res);
         $dir =  "archive/$date/" . $parsedUrl['host'] . $parsedUrl['path'];
@@ -92,7 +93,8 @@ else if($mode == 2) {
     //print_r($result);
 
     foreach ($result as $res) {
-        echo $res . ' ' . $step. '/' . $count . "\n";
+        $log = $res . ' ' . $step. '/' . $count . "\n";
+        error_log($log);
 
         $parsedUrl = parse_url($res);
         $dir =  "archive/$date/" . $parsedUrl['host'] . $parsedUrl['path'];
