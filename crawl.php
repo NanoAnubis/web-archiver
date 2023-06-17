@@ -21,8 +21,8 @@ $url = $argv[1];
 if(!isset($_POST['url']) && !isset($_POST['mode'])) {
     echo "No POST arguments";
 
-    $date = date("Ymd");
-    echo $date;
+    //$date = date("Ymd");
+    //echo $date;
 
     exit;
 }
@@ -198,6 +198,7 @@ function getHrefUrls($url) {
 
 function archive($url) {
     global $dir;
+    global $date;
 
     //$url = $argv[1];
 
@@ -368,7 +369,7 @@ function archive($url) {
         return "@import url(\"" . $fileName . "\");";
     }, $htmlContent);
 
-    $htmlContent = str_replace('<a href="' . $url, '<a href=""archive/$date/" . $parsedUrl['host'], $htmlContent);
+    $htmlContent = str_replace('<a href="' . $url, '<a href=' . "archive/$date/" . $parsedUrl['host'], $htmlContent);
 
     $htmlContent = preg_replace_callback('/<a([^>]*href=[\'"])([^\'"]+)([^\'"]*[\'"][^>]*>)/', function($matches) {
         $url = $matches[2];
