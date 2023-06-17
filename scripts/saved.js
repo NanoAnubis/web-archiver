@@ -7,9 +7,9 @@ document.addEventListener("DOMContentLoaded", function() {
         data.forEach(website => {
           const row = document.createElement("tr");
           row.innerHTML = `
-            <td><a href="${website.url}">${website.url}</a></td>
+            <td><a href="${website.url}" target="_blank">${website.url}</a></td>
             <td>${website.date}</td>
-            <td><a href="${website.dir}">Click here!</a></td>
+            <td><a href="${website.dir}" target="_blank">Click here!</a></td>
           `;
           websiteTable.querySelector("tbody").appendChild(row);
         });
