@@ -33,7 +33,7 @@ $url = $_POST['url']; //POST
 $mode = $_POST['mode']; //POST
 
 
-$date = date("YmdH");
+$date = date("YmdHi");
 
 
 //$url = $argv[1];
