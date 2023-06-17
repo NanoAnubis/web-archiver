@@ -442,7 +442,7 @@ function archive($url) {
 
     
     $navigationDiv = '
-    <div id="navigation">
+    <div id="navigationWebsites">
     Other versions: <select id="websiteDropdown"></select><button onclick="redirect()">Go</button>
     </div>
     ';
