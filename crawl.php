@@ -46,6 +46,9 @@ if($mode == 0) {
     //exit;
 
     archive($url);
+
+    addWebsiteRecord($url, $dir, $date);
+
     echo "http://localhost/$dir" . "\n";
 }
 else if($mode == 1){
@@ -69,6 +72,8 @@ else if($mode == 1){
 
         archive($res); //IMPORTANT!!!
         if($step == 1) {
+            addWebsiteRecord($url, $dir, $date);
+
             echo "http://localhost/$dir" . "\n";
         }
 
@@ -105,6 +110,11 @@ else if($mode == 2) {
         //exit;
 
         archive($res); //IMPORTANT!!!
+        if($step == 1) {
+            addWebsiteRecord($url, $dir, $date);
+            
+            echo "http://localhost/$dir" . "\n";
+        }
 
         $step = $step + 1;
         
@@ -498,5 +508,34 @@ function extractUrlsFromCSS($cssContent, $cssFile, $htmlUrl) {
     return $cssContent;
 }
 
+
+function addWebsiteRecord($url, $dir, $date) {
+    // Database connection settings
+    $host = 'localhost';
+    $dbname = 'webarchiver';
+    $username = 'webuser';
+    $password = 'pass@webuser';
+
+    // Establish a database connection
+    try {
+        $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch(PDOException $e) {
+        echo 'Connection failed: ' . $e->getMessage();
+        return;
+    }
+
+    // Prepare and execute the SQL query
+    try {
+        $stmt = $conn->prepare('INSERT INTO websites (url, dir, date) VALUES (?, ?, ?)');
+        $stmt->execute([$url, $dir, $date]);
+        echo 'Record added successfully!';
+    } catch(PDOException $e) {
+        echo 'Error adding record: ' . $e->getMessage();
+    }
+
+    // Close the database connection
+    $conn = null;
+}
 
 ?>
