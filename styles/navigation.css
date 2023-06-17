@@ -1,0 +1,14 @@
+#navigation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f2f2f2;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* CSS for the dropdown menu */
+#websiteDropdown {
+    width: 200px;
+}

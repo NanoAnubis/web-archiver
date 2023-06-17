@@ -7,8 +7,8 @@ fetch('/getwebsites.php')
     // Iterate over the website data and create an option element for each website
     data.forEach(website => {
       const option = document.createElement('option');
-      option.text = website.name;
-      option.value = website.url;
+      option.text = website.url + ' on ' + website.date;
+      option.value = website.dir;
       dropdown.appendChild(option);
     });
   })

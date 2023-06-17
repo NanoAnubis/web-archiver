@@ -448,6 +448,7 @@ function archive($url) {
     ';
 
     $scriptDiv ='
+    <link rel="stylesheet" type="text/css" href="/styles/navigation.css">
     <script type="text/javascript" src="/scripts/navigation.js" defer></script>
     ';
 
