@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <td><a href="${website.url}" target="_blank">${website.url}</a></td>
             <td>${website.date}</td>
             <td><a href="${website.dir}" target="_blank">Click here!</a></td>
+            <td>${website.mode}</td>
           `;
           websiteTable.querySelector("tbody").appendChild(row);
         });
