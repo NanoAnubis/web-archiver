@@ -448,7 +448,7 @@ function archive($url) {
     ';
 
     $scriptDiv ='
-    <script type="text/javascript" src="/scripts/navigation.js"></script>
+    <script type="text/javascript" src="/scripts/navigation.js" defer></script>
     ';
 
     $htmlContent = str_replace('</body>', $navigationDiv . '</body>', $htmlContent);
