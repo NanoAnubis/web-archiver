@@ -234,6 +234,15 @@ function archive($url) {
     // Fetch the HTML content of the requested URL
     $htmlContent = file_get_contents($url);
 
+
+    $navigationDiv = '<div id="navigation">
+    <select id="websiteDropdown"></select>
+    </div>
+    <script type="text/javascript" src="scripts/navigation.js"></script>';
+
+    $htmlContent = str_replace('</body>', $navigationDiv . '</body>', $htmlContent);
+
+
     //echo $url . ' '; //testing
 
     $parsedUrl = parse_url($url);
