@@ -14,7 +14,7 @@ fetch('/getwebsites.php')
 
     // Iterate over the website data and create an option element for each website
     data.forEach(website => {
-      if(website.url + '/' == url){
+      if(website.url == url){
         const option = document.createElement('option');
         option.text = website.date;
         option.value = website.dir;
