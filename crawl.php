@@ -43,10 +43,10 @@ if($mode == 0) {
     $parsedUrl = parse_url($url);
     $dir =  "archive/$date/" . $parsedUrl['host'] . $parsedUrl['path'];
 
-    //echo $url . "\n";
     //exit;
 
     archive($url);
+    echo $dir . "\n";
 }
 else if($mode == 1){
     $hrefUrls = getHrefUrls($url);
@@ -68,6 +68,9 @@ else if($mode == 1){
         //exit;
 
         archive($res); //IMPORTANT!!!
+        if($step == 1) {
+            echo $dir . "\n";
+        }
 
         $step = $step + 1;
 
