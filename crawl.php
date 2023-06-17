@@ -43,7 +43,7 @@ if($mode == 0) {
     $parsedUrl = parse_url($url);
     $dir =  "archive/$date/" . $parsedUrl['host'] . $parsedUrl['path'];
 
-    echo $url . "\n";
+    //echo $url . "\n";
     //exit;
 
     archive($url);
@@ -110,6 +110,9 @@ else {
     echo "Wrong mode!";
     exit;
 }
+
+
+echo "Website archiving completed!\n";
 
 /*
 $hrefUrls = getHrefUrls($url);
@@ -371,7 +374,7 @@ function archive($url) {
         return "@import url(\"" . $fileName . "\");";
     }, $htmlContent);
 
-    $htmlContent = str_replace('<a href="' . $url, '<a href=' . "archive/$date/" . $parsedUrl['host'], $htmlContent);
+    $htmlContent = str_replace('<a href="' . $url, '<a href=' . "/archive/$date/" . $parsedUrl['host'], $htmlContent);
 
     $htmlContent = preg_replace_callback('/<a([^>]*href=[\'"])([^\'"]+)([^\'"]*[\'"][^>]*>)/', function($matches) {
         $url = $matches[2];
@@ -425,7 +428,7 @@ function archive($url) {
     $filename = $dir . '/index.html';
     file_put_contents($filename, $htmlContent);
 
-    echo "Website archiving completed!\n";
+    //echo "Website archiving completed!\n";
 }
 
 
