@@ -443,6 +443,7 @@ function archive($url) {
     
     $navigationDiv = '
     <div id="navigation">
+    "Other versions: "
     <select id="websiteDropdown"></select>
     </div>
     ';
