@@ -49,7 +49,7 @@ if($mode == 0) {
 
     addWebsiteRecord($url, $dir, $date, $mode);
 
-    echo "http://localhost/$dir/$mode/" . "\n";
+    echo "http://localhost/$dir/" . "\n";
 }
 else if($mode == 1){
     $hrefUrls = getHrefUrls($url);
@@ -74,7 +74,7 @@ else if($mode == 1){
         if($step == 1) {
             addWebsiteRecord($url, $dir, $date, $mode);
 
-            echo "http://localhost/$dir/$mode/" . "\n";
+            echo "http://localhost/$dir/" . "\n";
         }
 
         $step = $step + 1;
@@ -113,7 +113,7 @@ else if($mode == 2) {
         if($step == 1) {
             addWebsiteRecord($url, $dir, $date, $mode);
             
-            echo "http://localhost/$dir/$mode/" . "\n";
+            echo "http://localhost/$dir/" . "\n";
         }
 
         $step = $step + 1;
