@@ -219,6 +219,7 @@ function getHrefUrls($url) {
 function archive($url) {
     global $dir;
     global $date;
+    global $mode;
 
     //$url = $argv[1];
 
