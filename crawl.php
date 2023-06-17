@@ -441,15 +441,19 @@ function archive($url) {
     }, $htmlContent);
 
     
-    $navigationDiv = '<div id="navigation">
+    $navigationDiv = '
+    <div id="navigation">
     <select id="websiteDropdown"></select>
-    </div>';
+    </div>
+    ';
 
-    $scriptDiv ='<script type="text/javascript" src="/scripts/navigation.js"></script>';
+    $scriptDiv ='
+    <script type="text/javascript" src="/scripts/navigation.js"></script>
+    ';
 
     $htmlContent = str_replace('</body>', $navigationDiv . '</body>', $htmlContent);
 
-    $htmlContent = str_replace('<head>', 'head' . $scriptDiv, $htmlContent);
+    $htmlContent = str_replace('</head>', $scriptDiv . '</head>', $htmlContent);
 
     // Save the HTML content as index.html in the archive directory
     $filename = $dir . '/index.html';
