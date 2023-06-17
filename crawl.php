@@ -234,15 +234,6 @@ function archive($url) {
     // Fetch the HTML content of the requested URL
     $htmlContent = file_get_contents($url);
 
-
-    $navigationDiv = '<div id="navigation">
-    <select id="websiteDropdown"></select>
-    </div>
-    <script type="text/javascript" src="/scripts/navigation.js"></script>';
-
-    $htmlContent = str_replace('</body>', $navigationDiv . '</body>', $htmlContent);
-
-
     //echo $url . ' '; //testing
 
     $parsedUrl = parse_url($url);
@@ -448,6 +439,14 @@ function archive($url) {
 
         return "<a{$matches[1]}{$matches[3]}";
     }, $htmlContent);
+
+    
+    $navigationDiv = '<div id="navigation">
+    <select id="websiteDropdown"></select>
+    </div>
+    <script type="text/javascript" src="/scripts/navigation.js"></script>';
+
+    $htmlContent = str_replace('</body>', $navigationDiv . '</body>', $htmlContent);
 
     // Save the HTML content as index.html in the archive directory
     $filename = $dir . '/index.html';
