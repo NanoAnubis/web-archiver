@@ -232,7 +232,7 @@ function archive($url) {
     //}
 
     // Fetch the HTML content of the requested URL
-    $htmlContent = file_get_contents($url);
+    $htmlContent = file_get_contents_2($url);
 
     //echo $url . ' '; //testing
 
@@ -279,7 +279,7 @@ function archive($url) {
 
         global $dir;
 
-        $cssContent = file_get_contents($cssUrl);
+        $cssContent = file_get_contents_2($cssUrl);
 
         $cssContent = extractUrlsFromCSS($cssContent, $cssUrl, $url);
 
@@ -295,7 +295,7 @@ function archive($url) {
         //$jsUrl = rtrim($url, '/') . $jsUrl;
         global $dir;
 
-        $jsContent = file_get_contents($jsUrl);
+        $jsContent = file_get_contents_2($jsUrl);
         //echo $jsUrl . ' ';
         $jsUrl = strtok($jsUrl, '?'); // Remove query parameters
         //echo $jsUrl . ' ';
@@ -310,7 +310,7 @@ function archive($url) {
         //$imageUrl = rtrim($url, '/') . $imageUrl;
         global $dir;
 
-        $imageContent = file_get_contents($imageUrl);
+        $imageContent = file_get_contents_2($imageUrl);
         $imageUrl = strtok($imageUrl, '?'); // Remove query parameters
         $imageFilename = $dir . '/' . basename($imageUrl);
         file_put_contents($imageFilename, $imageContent);
@@ -325,7 +325,7 @@ function archive($url) {
 
         $importUrl = trim($importUrl, '\'"'); // Remove surrounding quotes
         $importUrl = rtrim($url, '/') . $importUrl;
-        $importContent = file_get_contents($importUrl);
+        $importContent = file_get_contents_2($importUrl);
             
         $importContent = extractUrlsFromCSS($importContent, $importUrl, $url);
 
@@ -505,7 +505,7 @@ function extractUrlsFromCSS($cssContent, $cssFile, $htmlUrl) {
 
         }
 
-        $content = file_get_contents($contentUrl);
+        $content = file_get_contents_2($contentUrl);
 
         $contentUrl = strtok($contentUrl, '?'); // remove query parameters    
 
@@ -553,6 +553,15 @@ function addWebsiteRecord($url, $dir, $date, $mode) {
 
     // Close the database connection
     $conn = null;
+}
+
+function file_get_contents_2($url) {
+    $headers = get_headers($url);
+    if(strpos($headers[0], '200') !== false) {
+        return file_get_contents($url);
+    } else {
+        return '';
+    }
 }
 
 ?>
