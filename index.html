@@ -1,37 +1,35 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Web Archiver</title>
     <script type="text/javascript" src="scripts/form.js" defer></script>
     <script type="text/javascript" src="scripts/saved.js" defer></script>
-
-</head>
-<body>
-    <h1>Archive new website</h1>
+    <link rel="stylesheet" href="styles/main.css">
+  </head>
+  <body>
     <form id="myForm" action="crawl.php" method="post">
-        <label for="url">URL:</label>
-        <input type="text" id="url" name="url" required><br><br>
-        <label for="mode">Mode:</label>
-        <select id="mode" name="mode" required>
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-        </select><br><br>
-        <input type="submit" value="Submit">
+      <h1>Archive new website</h1>
+      <label for="url">URL:</label>
+      <input type="text" id="url" name="url" required><br><br>
+      <label for="mode">Mode:</label>
+      <select id="mode" name="mode" required>
+          <option value="0">0 Clicks (fast ~1 minute)</option>
+          <option value="1">1 Clicks (slow ~20 minutes)</option>
+          <option value="2">2 Clicks (very slow 30+ minutes)</option>
+      </select><br><br>
+      <input type="submit" value="Submit">
     </form>
-
-    <h1>Saved Websites</h1>
-  <table id="websiteTable">
-    <thead>
-      <tr>
-        <th>URL</th>
-        <th>Date</th>
-        <th>Dir</th>
-        <th>Mode</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
-</body>
+    <table id="websiteTable">
+      <span id="tablename">Saved Websites</span>
+      <thead>
+        <tr>
+          <th>URL</th>
+          <th>Date</th>
+          <th>Dir</th>
+          <th>Mode</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </body>
 </html>
