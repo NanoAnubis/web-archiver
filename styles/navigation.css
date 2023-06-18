@@ -1,8 +1,23 @@
 #navigationWebsites {
+    all: initial;
+    z-index: 9999;
     position: fixed;
     top: 10%;
     right: 0;
     background-color: #f2f2f2;
     padding: 10px;
     box-sizing: border-box;
+    border-radius: 10px; /* adds rounded corners */
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1); /* adds a subtle shadow effect */
+    font-family: "Arial", sans-serif; /* changes the font */
+    font-size: 16px; /* increases the font size */
+    color: #333; /* changes the font color */
+    transition: all 0.3s ease; /* adds a smooth transition effect */
+}
+  
+#navigationWebsites:hover {
+    transform: translateX(-10px); /* adds a slight shift to the left on hover */
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2); /* increases the shadow on hover */
+    background-color: #fff; /* changes the background color on hover */
+    color: #444; /* changes the font color on hover */
 }
