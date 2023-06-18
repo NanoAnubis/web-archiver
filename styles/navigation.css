@@ -1,23 +1,35 @@
 #navigationWebsites {
-    all: initial;
-    z-index: 9999;
-    position: fixed;
-    top: 10%;
-    right: 0;
     background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px #ccc;
     padding: 10px;
-    box-sizing: border-box;
-    border-radius: 10px; /* adds rounded corners */
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1); /* adds a subtle shadow effect */
-    font-family: "Arial", sans-serif; /* changes the font */
-    font-size: 16px; /* increases the font size */
-    color: #333; /* changes the font color */
-    transition: all 0.3s ease; /* adds a smooth transition effect */
+    position: relative;
+    z-index: 9999;
 }
-  
-#navigationWebsites:hover {
-    transform: translateX(-10px); /* adds a slight shift to the left on hover */
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2); /* increases the shadow on hover */
-    background-color: #fff; /* changes the background color on hover */
-    color: #444; /* changes the font color on hover */
+
+#websiteDropdown {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 1px 1px 3px #ccc;
+}
+
+#webbutton {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #fff;
+    background-color: #3399cc;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    box-shadow: 1px 1px 3px #ccc;
+}
+
+#webbutton:hover {
+    background-color: #2679a8;
 }
