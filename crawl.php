@@ -1,31 +1,9 @@
 <?php
 
 set_time_limit(0);
-/*
-
-if (count($argv) !== 2) {
-    echo "Usage: php crawl.php [URL]";
-    exit(1);
-}
-
-$url = $argv[1];
-
-*/
-//$parsedUrl = parse_url($url);
-//$dir =  "archive/$date/$mode/" . $parsedUrl['host'] . $parsedUrl['path'];
-
-//$rootContent = file_get_contents($argv[1]);
-
-//archive($argv[1]);
-
-////
 
 if(!isset($_POST['url']) && !isset($_POST['mode'])) {
     echo "No POST arguments";
-
-    //$date = date("Ymd");
-    //echo $date;
-
     exit;
 }
 
@@ -35,15 +13,9 @@ $mode = $_POST['mode']; //POST
 
 $date = date("YmdHi");
 
-
-//$url = $argv[1];
-//$mode = $argv[2];
-
 if($mode == 0) {
     $parsedUrl = parse_url($url);
     $dir =  "archive/$date/$mode/" . $parsedUrl['host'] . $parsedUrl['path'];
-
-    //exit;
 
     archive($url);
 
@@ -67,10 +39,8 @@ else if($mode == 1){
 
         $parsedUrl = parse_url($res);
         $dir =  "archive/$date/$mode/" . $parsedUrl['host'] . $parsedUrl['path'];
-        
-        //exit;
 
-        archive($res); //IMPORTANT!!!
+        archive($res);
         if($step == 1) {
             addWebsiteRecord($url, $dir, $date, $mode);
 
@@ -98,8 +68,6 @@ else if($mode == 2) {
     $count = count($result);
     $step = 1;
 
-    //print_r($result);
-
     foreach ($result as $res) {
         $log = $res . ' ' . $step. '/' . $count . "\n";
         error_log($log);
@@ -107,9 +75,8 @@ else if($mode == 2) {
         $parsedUrl = parse_url($res);
         $dir =  "archive/$date/$mode/" . $parsedUrl['host'] . $parsedUrl['path'];
 
-        //exit;
+        archive($res);
 
-        archive($res); //IMPORTANT!!!
         if($step == 1) {
             addWebsiteRecord($url, $dir, $date, $mode);
             
@@ -129,53 +96,6 @@ else {
 
 echo "Website archiving completed!\n";
 
-/*
-$hrefUrls = getHrefUrls($url);
-
-/*$result = [];
-
-foreach ($hrefUrls as $hrefUrl) {
-    //echo $hrefUrl . "\n";
-    $secondIter = getHrefUrls($hrefUrl);
-    if ($secondIter == null) {
-        continue;
-    }
-    $result = array_merge($result,$secondIter);
-    //$secondIter = array_unique($secondIter);
-    //foreach ($secondIter as $secondUrl) {
-    //    echo $secondUrl . "\n";
-    //}
-}
-
-*/ //IMPORTANT!!! IN DEPTH SEARCH
-
-/*
-
-
-$result = $hrefUrls;
-$count = count($result);
-$step = 1;
-
-$result = array_unique($result);
-
-foreach ($result as $res) {
-    echo $res . ' ' . $step. '/' . $count . "\n";
-
-    $parsedUrl = parse_url($res);
-    $dir =  "archive/$date/$mode/" . $parsedUrl['host'] . $parsedUrl['path'];
-
-    //$rootContent = file_get_contents($argv[1]);
-
-    //echo $dir . "\n";
-
-    archive($res); //IMPORTANT!!!
-
-    $step = $step + 1;
-    //exit;
-    //$secondIter[] = getHrefUrls($hrefUrl);
-}
-
-*/
 
 function getHrefUrls($url) {
     $htmlContent = file_get_contents($url);
@@ -221,44 +141,21 @@ function archive($url) {
     global $date;
     global $mode;
 
-    //$url = $argv[1];
-
-    //mkdir('archive');
-    // Perform URL validation or sanitization if needed
-
-    // Create the archive directory if it doesn't exist
-    //if (!is_dir('archive')) {
-    //    mkdir('archive');
-    //}
 
     // Fetch the HTML content of the requested URL
     $htmlContent = file_get_contents_2($url);
 
-    //echo $url . ' '; //testing
-
     $parsedUrl = parse_url($url);
-    //$url2= $url;
     $url= 'https://' . $parsedUrl['host'];
-
-    //$dir =  "archive/$date/$mode/" . $parsedUrl['host'] . $parsedUrl['path'];
 
     if (!is_dir('archive')) {
         echo "Directory archive not created!";
         exit;
-        //mkdir('archive');
     }
 
-    if (is_dir($dir)) {
-        //removeDirectory($dir);
-    }
 
     mkdir($dir,0777,true);
 
-    //return;
-
-    //echo $url . ' '; //testing
-
-    // Replace '//' in src with 'https://'
     $htmlContent = str_replace('src="//', 'src="https://', $htmlContent);
     $htmlContent = str_replace('href="//', 'href="https://', $htmlContent);
     $htmlContent = str_replace('src="/', 'src="' . $url . '/', $htmlContent);
@@ -266,16 +163,12 @@ function archive($url) {
     $htmlContent = str_replace('href="/', 'href="' . $url . '/', $htmlContent);
     $htmlContent = str_replace("href='/", "href='" . $url . '/', $htmlContent);
 
-    //$filename = "archive/$date/$mode/"ndex.html'; //testing
-    //file_put_contents($filename, $htmlContent); //testing
-    //exit; //testing
 
     // Download linked CSS, JS, and images
     preg_match_all('/<link[^>]+href=[\'"]([^\'"]+)[\'"][^>]*>/', $htmlContent, $matches);
     $cssUrls = $matches[1];
 
     foreach ($cssUrls as $cssUrl) {
-        //$cssUrl = rtrim($url, '/') . $cssUrl;
 
         global $dir;
 
@@ -292,13 +185,10 @@ function archive($url) {
     $jsUrls = $matches[1];
 
     foreach ($jsUrls as $jsUrl) {
-        //$jsUrl = rtrim($url, '/') . $jsUrl;
         global $dir;
 
         $jsContent = file_get_contents_2($jsUrl);
-        //echo $jsUrl . ' ';
         $jsUrl = strtok($jsUrl, '?'); // Remove query parameters
-        //echo $jsUrl . ' ';
         $jsFilename = $dir . '/' . basename($jsUrl);
         file_put_contents($jsFilename, $jsContent);
     }
@@ -307,7 +197,6 @@ function archive($url) {
     $imageUrls = $matches[1];
 
     foreach ($imageUrls as $imageUrl) {
-        //$imageUrl = rtrim($url, '/') . $imageUrl;
         global $dir;
 
         $imageContent = file_get_contents_2($imageUrl);
@@ -394,48 +283,14 @@ function archive($url) {
 
     $htmlContent = preg_replace_callback('/<a([^>]*href=[\'"])([^\'"]+)([^\'"]*[\'"][^>]*>)/', function($matches) {
         $url = $matches[2];
-        
-        //$parsedUrl = parse_url($url);
-
-        //if ($parsedUrl['host'] == 'URL') {
-        //    $url= '.' . $parsedUrl['path'] . '/index.html';
-        //}
-        //else {
-        //    $url= $parsedUrl['host'] . $parsedUrl['path'];
-        //    return "<a{$matches[1]}{$url}{$matches[3]}";
-        //}
 
         $url= $url . '/index.html';
-
-        //$url = strtok($url, '?'); // remove query parameters
-
-        //$fileName = basename(parse_url($url, PHP_URL_PATH));
-
-        //$url1 = str_replace('<a href="' . $url, "<a href=.", $url1);
 
         return "<a{$matches[1]}{$url}{$matches[3]}";
     }, $htmlContent);
 
     $htmlContent = preg_replace_callback('/<a([^>]*href=[\'"])(http[^\'"]+)([^\'"]*[\'"][^>]*>)/', function($matches) {
         $url = $matches[2];
-        
-        //$parsedUrl = parse_url($url);
-
-        //if ($parsedUrl['host'] == 'URL') {
-        //    $url= '.' . $parsedUrl['path'] . '/index.html';
-        //}
-        //else {
-        //    $url= $parsedUrl['host'] . $parsedUrl['path'];
-        //    return "<a{$matches[1]}{$url}{$matches[3]}";
-        //}
-
-        //$url= $url . '/index.html';
-
-        //$url = strtok($url, '?'); // remove query parameters
-
-        //$fileName = basename(parse_url($url, PHP_URL_PATH));
-
-        //$url1 = str_replace('<a href="' . $url, "<a href=.", $url1);
 
         return "<a{$matches[1]}{$matches[3]}";
     }, $htmlContent);
@@ -459,8 +314,6 @@ function archive($url) {
     // Save the HTML content as index.html in the archive directory
     $filename = $dir . '/index.html';
     file_put_contents($filename, $htmlContent);
-
-    //echo "Website archiving completed!\n";
 }
 
 
@@ -481,9 +334,7 @@ function extractUrlsFromCSS($cssContent, $cssFile, $htmlUrl) {
 
 
     // Match all occurrences of url()
-    //$pattern = '/url\((["\']?)(\.\.\/|http.*?)\1\)/i';
     $pattern = '/url\((["\']?)(.*?)\1\)/i';
-    //$pattern = '/url\((["\']?)(\.\.\/.*?)\1\)/i'; //works
     preg_match_all($pattern, $cssContent, $matches);
 
     // Extract URLs from the matches
@@ -527,13 +378,11 @@ function extractUrlsFromCSS($cssContent, $cssFile, $htmlUrl) {
 
 
 function addWebsiteRecord($url, $dir, $date, $mode) {
-    // Database connection settings
     $host = 'localhost';
     $dbname = 'webarchiver';
     $username = 'webuser';
     $password = 'pass@webuser';
 
-    // Establish a database connection
     try {
         $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -542,16 +391,13 @@ function addWebsiteRecord($url, $dir, $date, $mode) {
         return;
     }
 
-    // Prepare and execute the SQL query
     try {
         $stmt = $conn->prepare('INSERT INTO websites (url, dir, date, mode) VALUES (?, ?, ?, ?)');
         $stmt->execute([$url, $dir, $date, $mode]);
-        //echo 'Record added successfully!';
     } catch(PDOException $e) {
         echo 'Error adding record: ' . $e->getMessage();
     }
 
-    // Close the database connection
     $conn = null;
 }
 
