@@ -382,9 +382,10 @@ function addWebsiteRecord($url, $dir, $date, $mode) {
     $dbname = 'webarchiver';
     $username = 'webuser';
     $password = 'pass@webuser';
+    $port = '3306';
 
     try {
-        $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+        $conn = new PDO("mysql:host=$host;port=$port;dbname=$dbname", $username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch(PDOException $e) {
         echo 'Connection failed: ' . $e->getMessage();
